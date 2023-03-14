@@ -1,3 +1,3 @@
 # dmc_flutter
 
-##Flutter project buat semester 6
+##Flutter project buat semester 6.
