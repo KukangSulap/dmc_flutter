@@ -3,14 +3,15 @@ import 'package:go_router/go_router.dart';
 // import 'package:url_strategy/url_strategy.dart';
 
 void main() {
-  // setPathUrlStrategy();
+// setPathUrlStrategy();
   return runApp(App());
 }
 
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
-  
-  static const String title = 'GoRouter Routes';
+
+  static const String title = 'Harihari Pergi';
+
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
@@ -20,65 +21,75 @@ class App extends StatelessWidget {
   );
 
   final GoRouter _router = GoRouter(
-    errorBuilder: (context, state) => ErrorScreen(error:state.error),
+    errorBuilder: (context, state) => ErrorScreen(error: state.error),
     routes: <GoRoute>[
       GoRoute(
-
         routes: <GoRoute>[
           GoRoute(
             path: 'page2',
             builder: (BuildContext context, GoRouterState state) =>
-            const Page2Screen(),
+                const Page2Screen(),
           ),
           GoRoute(
             path: 'page3',
             builder: (BuildContext context, GoRouterState state) =>
-            const Page3Screen(),
-
+                const Page3Screen(),
           ),
           GoRoute(
             path: 'page4',
             builder: (BuildContext context, GoRouterState state) =>
-            const Page4Screen(),
-
+                const Page4Screen(),
           ),
         ],
         path: '/',
         builder: (BuildContext context, GoRouterState state) =>
-        const Page1Screen(),
+            const Page1Screen(),
       ),
     ],
-
   );
 }
 
 /// The screen of the first page.
 class Page1Screen extends StatelessWidget {
-  /// Creates a [Page1Screen].
   const Page1Screen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text(App.title)),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
+  Widget build(BuildContext context) {
+    // final screenHeight = MediaQuery.of(context).size.height;
+
+    return Scaffold(
+      appBar: AppBar(
+        leading: Image.asset(
+          'assets/images/bakudan.png',
+          fit: BoxFit.cover,
+        ),
+        actions: [Icon(Icons.menu)],
+        title: const Text(App.title),
+        backgroundColor: const Color(0xFF343A40),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Image.asset(
+            'assets/images/img.png',
+            height: 300,
+            fit: BoxFit.scaleDown,
+          ),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () => context.go('/page2'),
-            child: const Text('Go to page 2'),
+            child: const Text('Pesawat'),
           ),
-          const SizedBox(height: 10,),
+          const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () => context.go('/page3'),
             child: const Text('Go to page 3'),
           ),
         ],
       ),
-    ),
-  );
+    );
+  }
 }
-
 /// The screen of the second page.
 class Page2Screen extends StatelessWidget {
   /// Creates a [Page2Screen].
@@ -86,18 +97,18 @@ class Page2Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text(App.title)),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:  <Widget>[
-          ElevatedButton(
-              onPressed: () => context.go('/'),
-              child: const Text('Go back to home page')),
-        ],
-      ),
-    ),
-  );
+        appBar: AppBar(title: const Text("Pilihan Pesawat")),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                  onPressed: () => context.go('/'),
+                  child: const Text('Go back to home page')),
+            ],
+          ),
+        ),
+      );
 }
 
 /// The screen of the second page.
@@ -107,18 +118,18 @@ class Page3Screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: const Text(App.title)),
-    body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:  <Widget>[
-          ElevatedButton(
-              onPressed: () => context.go('/page4'),
-              child: const Text('Go to page4'))
-        ],
-      ),
-    ),
-  );
+        appBar: AppBar(title: const Text(App.title)),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              ElevatedButton(
+                  onPressed: () => context.go('/page4'),
+                  child: const Text('Go to page4'))
+            ],
+          ),
+        ),
+      );
 }
 
 /// The screen of the second page.
@@ -130,35 +141,34 @@ class Page4Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     final router = GoRouter.of(context);
     return Scaffold(
-      appBar: AppBar(title:  Text(router.location.toString())),
+      appBar: AppBar(title: Text(router.location.toString())),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children:  <Widget>[
+          children: <Widget>[
             ElevatedButton(
                 onPressed: () => context.go('/'),
                 child: const Text('Go back to home page'))
           ],
         ),
       ),
-    );}
+    );
+  }
 }
 
 class ErrorScreen extends StatelessWidget {
   final Exception? error;
-  const ErrorScreen( {Key? key, required this.error}) : super(key: key);
+
+  const ErrorScreen({Key? key, required this.error}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Error"),
-
       ),
       body: Center(
-        child: Text(
-            error.toString()
-        ),
+        child: Text(error.toString()),
       ),
     );
   }
