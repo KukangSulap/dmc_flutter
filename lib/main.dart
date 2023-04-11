@@ -1,3 +1,5 @@
+import 'package:dmc_flutter/model/post.dart';
+import 'package:dmc_flutter/service/remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 // import 'package:url_strategy/url_strategy.dart';
@@ -24,7 +26,7 @@ class App extends StatelessWidget {
     // errorBuilder: (context, state) => ErrorScreen(error: state.error),
     routes: <GoRoute>[
       GoRoute(
-        routes: <GoRoute>[
+        routes: const <GoRoute>[
           // GoRoute(
           //   path: 'page2',
           //   builder: (BuildContext context, GoRouterState state) =>
@@ -62,7 +64,26 @@ class _Page1ScreenState extends State<Page1Screen> {
   final List<String> pathGambarYgy = [
     'assets/images/plane.jpg',
     'assets/images/train.jpg',
-    'assets/images/bus.jpg'];
+    'assets/images/bus.jpg'
+  ];
+  List<Post>? posts;
+  var isLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getData();
+  }
+
+  getData() async {
+    posts = await RemoteService().getPosts();
+    if (posts != null) {
+      setState(() {
+        isLoaded = true;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,45 +93,62 @@ class _Page1ScreenState extends State<Page1Screen> {
           'assets/images/bakudan.png',
           fit: BoxFit.cover,
         ),
-        actions: <Widget> [
-          IconButton(
+        actions: <Widget>[
+          PopupMenuButton(
             icon: const Icon(Icons.menu),
-            tooltip: 'Show Snackbar',
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('This is a snackbar')));
+            itemBuilder: (BuildContext context) {
+              return [
+                const PopupMenuItem(
+                  value: 1,
+                  child: Text('Profile'),
+                ),
+                const PopupMenuItem(
+                  value: 2,
+                  child: Text('Logout'),
+                ),
+              ];
             },
-          ),
+            onSelected: (value) {
+              //ini setara sama onPressed
+            },
+          )
         ],
         title: const Text(App.title),
         backgroundColor: const Color(0xFF343A40),
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Image.asset(
               _imageOne,
               height: 300,
               fit: BoxFit.cover,
             ),
-            const SizedBox(height: 16.0),
-            const Text(
-              'TENTUKAN PERJALANANMU',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const Text(
-              'BERDASARKAN AKTIVITAS YANG DI INGINKAN',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 20.0),
+            Center(
+              child: Column(
+                children: const [
+                  Text(
+                    'TENTUKAN PERJALANANMU',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    'BERDASARKAN AKTIVITAS YANG DI INGINKAN',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16.0),
             SizedBox(
-              height: 200,
+              height: 190,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: _placeNames.length,
@@ -125,11 +163,72 @@ class _Page1ScreenState extends State<Page1Screen> {
                 },
               ),
             ),
-            // Image.asset(
-            //   _imageOne,
-            //   height: 300,
-            //   fit: BoxFit.cover,
-            // ),
+            Container(
+              padding: const EdgeInsets.only(left: 8),
+              child: const Text(
+                'Filler',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 450,
+              child: Visibility(
+                visible: isLoaded,
+                replacement: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+                child: ListView.builder(
+                  itemCount: posts?.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.grey[300],
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      posts![index].title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.clip,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      posts![index].body ?? '',
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Divider()
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
           ],
         ),
       ),
