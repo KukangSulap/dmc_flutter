@@ -127,8 +127,8 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: [
                   SizedBox(height: 150.0),
-                  Text(
-                    'Form Login',
+                  const Text(
+                    'Login',
                     style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
