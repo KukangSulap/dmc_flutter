@@ -1,4 +1,5 @@
 import 'package:dmc_flutter/home.dart';
+import 'package:dmc_flutter/registrasi.dart';
 import 'package:flutter/material.dart';
 import 'package:dmc_flutter/dPemes.dart';
 
@@ -105,6 +106,10 @@ class _LoginState extends State<Login> {
               TextButton(
                 onPressed: () {
                   // belum ada apa apa musti ditambah ke fungsi yang lain
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationForm()));
                 },
                 child: Text('Daftar'),
               ),

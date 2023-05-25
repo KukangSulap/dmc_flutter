@@ -1,8 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:dmc_flutter/main.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -25,6 +29,11 @@ class Pemesanan extends StatefulWidget {
 }
 
 class _PemesananState extends State<Pemesanan> {
+  final _namaController = TextEditingController();
+  final _asalController = TextEditingController();
+  final _tujuanController = TextEditingController();
+  final _namakenController = TextEditingController();
+  final _hargaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,10 +71,10 @@ class _PemesananState extends State<Pemesanan> {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.topLeft,
-                child: const TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Gerry William"),
+                child: TextField(
+                  controller: _namaController,
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder()),
                 ),
               ),
 
@@ -78,10 +87,10 @@ class _PemesananState extends State<Pemesanan> {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.topLeft,
-                child: const TextField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "Pesawat"),
+                child: TextField(
+                  controller: _namakenController,
+                  decoration:
+                      const InputDecoration(border: OutlineInputBorder()),
                 ),
               ),
 
@@ -94,11 +103,11 @@ class _PemesananState extends State<Pemesanan> {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.topLeft,
-                child: const TextField(
-                  enabled: false,
+                child: TextField(
+                  controller: _asalController,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Bekasi; 20 April 2023; 09.00"),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
 
@@ -111,11 +120,11 @@ class _PemesananState extends State<Pemesanan> {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.topLeft,
-                child: const TextField(
-                  enabled: false,
+                child: TextField(
+                  controller: _tujuanController,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: "Bandung; 20 April 2023; 11.30"),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
 
@@ -128,17 +137,30 @@ class _PemesananState extends State<Pemesanan> {
               Container(
                 padding: const EdgeInsets.all(8.0),
                 alignment: Alignment.topLeft,
-                child: const TextField(
-                  enabled: false,
+                child: TextField(
+                  controller: _hargaController,
                   decoration: InputDecoration(
-                      border: OutlineInputBorder(), labelText: "75.000"),
+                    border: OutlineInputBorder(),
+                  ),
                 ),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Colors.blue,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  final name = _namaController.text;
+                  final namaKen = _namakenController.text;
+                  final asal = _asalController.text;
+                  final tujuan = _tujuanController.text;
+                  final harga = _hargaController.text;
+                  inputPemes(
+                      name: name,
+                      namaKen: namaKen,
+                      asal: asal,
+                      tujuan: tujuan,
+                      harga: harga);
+                },
                 child: const Text("Lanjut ke Pembayaran"),
               ),
             ],
@@ -146,5 +168,21 @@ class _PemesananState extends State<Pemesanan> {
         ),
       ),
     );
+  }
+
+  Future inputPemes(
+      {required String name, namaKen, asal, tujuan, harga}) async {
+    final docPemes = FirebaseFirestore.instance.collection('pemesanan').doc();
+
+    final json = {
+      'idPem': docPemes.id,
+      'nama_user': name,
+      'nama_kendaraan': namaKen,
+      'asal': asal,
+      'tujuan': tujuan,
+      'harga': harga,
+    };
+
+    await docPemes.set(json);
   }
 }

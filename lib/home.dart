@@ -1,4 +1,5 @@
 import 'package:dmc_flutter/detailPesawat.dart';
+import 'package:dmc_flutter/main.dart';
 import 'package:dmc_flutter/model/post.dart';
 import 'package:dmc_flutter/profile.dart';
 import 'package:dmc_flutter/service/remote_service.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: _router.routerDelegate,
         routeInformationParser: _router.routeInformationParser,
         routeInformationProvider: _router.routeInformationProvider,
@@ -112,7 +114,10 @@ class _Page1ScreenState extends State<Page1Screen> {
                   value: 2,
                   child: Text('Logout'),
                   onTap: () {
-                    Navigator.pop(context);
+                    Future(() => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Login())));
                   },
                 ),
               ];
@@ -173,7 +178,7 @@ class _Page1ScreenState extends State<Page1Screen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const detailPesawat()));
+                                builder: (context) => detailPesawat()));
                       },
                     ),
                   );
