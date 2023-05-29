@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dmc_flutter/metodePembayaran.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:dmc_flutter/main.dart';
@@ -161,6 +162,10 @@ class _PemesananState extends State<Pemesanan> {
                       asal: asal,
                       tujuan: tujuan,
                       harga: harga);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PaymentListPage()));
                 },
                 child: const Text("Lanjut ke Pembayaran"),
               ),
