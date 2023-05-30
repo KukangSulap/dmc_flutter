@@ -1,7 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+void main() async {
+  runApp(RegistrationForm());
+}
 
 class RegistrationForm extends StatelessWidget {
-  const RegistrationForm({Key? key}) : super(key: key);
+  RegistrationForm({super.key});
+
+  //Register User
+  final TextEditingController _textEmail = TextEditingController();
+  final TextEditingController _textPassword = TextEditingController();
+  final TextEditingController _textNamaDepan = TextEditingController();
+  final TextEditingController _textNamaBelakang = TextEditingController();
+
+  Future inputUser(
+      {required String email, password, namaDepan, namaBel}) async {
+    final register = FirebaseFirestore.instance.collection('user').doc();
+
+    final json = {
+      'email': email,
+      'password': password,
+      'nama_depan': namaDepan,
+      'nama_belakang': namaBel,
+    };
+
+    await register.set(json);
+  }
+  //
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +61,7 @@ class RegistrationForm extends StatelessWidget {
                   child: ListView(
                     children: [
                       TextFormField(
+                        controller: _textNamaDepan,
                         decoration: InputDecoration(
                           labelText: 'Nama Depan',
                           border: OutlineInputBorder(),
@@ -47,6 +75,7 @@ class RegistrationForm extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _textNamaBelakang,
                         decoration: InputDecoration(
                           labelText: 'Nama Belakang',
                           border: OutlineInputBorder(),
@@ -60,6 +89,7 @@ class RegistrationForm extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _textEmail,
                         decoration: InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(),
@@ -77,6 +107,7 @@ class RegistrationForm extends StatelessWidget {
                       ),
                       SizedBox(height: 20),
                       TextFormField(
+                        controller: _textPassword,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
@@ -95,7 +126,12 @@ class RegistrationForm extends StatelessWidget {
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: Implementasi action saat tombol Daftar di tap
+                          inputUser(
+                              email: _textEmail.text,
+                              password: _textPassword.text,
+                              namaBel: _textNamaBelakang.text,
+                              namaDepan: _textNamaDepan.text);
+                          Navigator.pop(context);
                         },
                         child: Text('Daftar'),
                       ),

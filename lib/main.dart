@@ -1,9 +1,12 @@
 import 'package:dmc_flutter/home.dart';
 import 'package:dmc_flutter/registrasi.dart';
 import 'package:flutter/material.dart';
-import 'package:dmc_flutter/dPemes.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -63,7 +66,8 @@ class _LoginState extends State<Login> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextFormField(
-            decoration: InputDecoration(
+            controller: _textEmail,
+            decoration: const InputDecoration(
               labelText: 'Email',
               fillColor: Colors.white,
               filled: true,
@@ -71,6 +75,7 @@ class _LoginState extends State<Login> {
           ),
           const SizedBox(height: 16.0),
           TextFormField(
+            controller: _textPassword,
             obscureText: _isObscure,
             decoration: InputDecoration(
               labelText: 'Password',
@@ -86,9 +91,8 @@ class _LoginState extends State<Login> {
           ),
           const SizedBox(height: 24.0),
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const Page1Screen()));
+            onPressed: () async {
+              checkUser(_textEmail.text, _textPassword.text);
             },
             child: Text('Login'),
             style: ElevatedButton.styleFrom(
@@ -105,11 +109,11 @@ class _LoginState extends State<Login> {
               Text('Belum punya akun?'),
               TextButton(
                 onPressed: () {
-                  // belum ada apa apa musti ditambah ke fungsi yang lain
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => RegistrationForm()));
+                  // belum ada apa apa musti ditambah ke fungsi yang lain
                 },
                 child: Text('Daftar'),
               ),
@@ -120,6 +124,38 @@ class _LoginState extends State<Login> {
     );
   }
   //endWidget
+
+  //Login user
+  final TextEditingController _textEmail = TextEditingController();
+  final TextEditingController _textPassword = TextEditingController();
+
+  Future<void> checkUser(String email, String password) async {
+    final snapshot = await FirebaseFirestore.instance
+        .collection('user')
+        .where("email", isEqualTo: email)
+        .where("password", isEqualTo: password)
+        .get();
+
+    if (snapshot.docs.isNotEmpty) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Page1Screen()));
+    } else {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Login Failed'),
+          content: const Text('Username or password is salah.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+  //
 
   @override
   Widget build(BuildContext context) {
