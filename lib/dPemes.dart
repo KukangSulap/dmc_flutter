@@ -59,117 +59,119 @@ class _PemesananState extends State<Pemesanan> {
         ),
       ),
       body: SafeArea(
-        child: Container(
-          alignment: Alignment.topLeft,
-          margin: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              //Nama Lengkap
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: const Text("Nama Lengkap"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _namaController,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
+        child: SingleChildScrollView(
+          child: Container(
+            alignment: Alignment.topLeft,
+            margin: const EdgeInsets.all(15),
+            child: Column(
+              children: [
+                //Nama Lengkap
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: const Text("Nama Lengkap"),
                 ),
-              ),
-
-              //Nama Kendaraan
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: const Text("Nama Kendaraan"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _namakenController,
-                  decoration:
-                      const InputDecoration(border: OutlineInputBorder()),
-                ),
-              ),
-
-              //Asal Berangkat
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: const Text("Asal Berangkat"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _asalController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    controller: _namaController,
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
                   ),
                 ),
-              ),
 
-              //Tujuan Berangkat
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: const Text("Tujuan Berangkat"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _tujuanController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                //Nama Kendaraan
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: const Text("Nama Kendaraan"),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    controller: _namakenController,
+                    decoration:
+                        const InputDecoration(border: OutlineInputBorder()),
                   ),
                 ),
-              ),
 
-              //Harga
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: const Text("Harga"),
-              ),
-              Container(
-                padding: const EdgeInsets.all(8.0),
-                alignment: Alignment.topLeft,
-                child: TextField(
-                  controller: _hargaController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                //Asal Berangkat
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: const Text("Asal Berangkat"),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    controller: _asalController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ),
-              ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.blue,
+
+                //Tujuan Berangkat
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: const Text("Tujuan Berangkat"),
                 ),
-                onPressed: () {
-                  final name = _namaController.text;
-                  final namaKen = _namakenController.text;
-                  final asal = _asalController.text;
-                  final tujuan = _tujuanController.text;
-                  final harga = _hargaController.text;
-                  inputPemes(
-                      name: name,
-                      namaKen: namaKen,
-                      asal: asal,
-                      tujuan: tujuan,
-                      harga: harga);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => PaymentListPage()));
-                },
-                child: const Text("Lanjut ke Pembayaran"),
-              ),
-            ],
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    controller: _tujuanController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+
+                //Harga
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: const Text("Harga"),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(8.0),
+                  alignment: Alignment.topLeft,
+                  child: TextField(
+                    controller: _hargaController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.blue,
+                  ),
+                  onPressed: () {
+                    final name = _namaController.text;
+                    final namaKen = _namakenController.text;
+                    final asal = _asalController.text;
+                    final tujuan = _tujuanController.text;
+                    final harga = _hargaController.text;
+                    inputPemes(
+                        name: name,
+                        namaKen: namaKen,
+                        asal: asal,
+                        tujuan: tujuan,
+                        harga: harga);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PaymentListPage()));
+                  },
+                  child: const Text("Lanjut ke Pembayaran"),
+                ),
+              ],
+            ),
           ),
         ),
       ),
