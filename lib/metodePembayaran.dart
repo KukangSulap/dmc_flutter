@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 class PaymentListPage extends StatelessWidget {
   final List<PaymentItem> paymentList = [
-    PaymentItem('Paypal', 'https://img.freepik.com/free-icon/paypal_318-674245.jpg'),
-    PaymentItem('Payment 2', 'https://img.freepik.com/free-icon/paypal_318-674245.jpg'),
-    PaymentItem('Payment 3', 'https://img.freepik.com/free-icon/paypal_318-674245.jpg'),
-    // Add more payment items as needed
+    PaymentItem('BCA', 'https://images.tokopedia.net/img/toppay/sprites/bca.png'),
+    PaymentItem('QRIS', 'https://images.tokopedia.net/img/toppay/sprites/QRIS.png'),
+    PaymentItem('Kartu Kredit / Debit', 'https://images.tokopedia.net/icons/icon-cc-green-v1.png'),
   ];
 
   @override
@@ -41,36 +40,36 @@ class PaymentListPage extends StatelessWidget {
           itemCount: paymentList.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
               child: Card(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
                 child: ListTile(
                   contentPadding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
-                  leading: Container(
+                  leading: SizedBox(
                     width: 40,
                     height: 40,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(paymentList[index].logoUrl),
-                      ),
+                    child: Image.network(
+                      paymentList[index].logoUrl,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  title: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      paymentList[index].name,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 16.0),
+                      Text(
+                        paymentList[index].name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                   onTap: () {
-                    // Handle payment item tap
-                    // You can navigate to a details page or perform any desired action
+                    // handle onTap event
                   },
                 ),
               ),
