@@ -28,7 +28,6 @@ class RegistrationForm extends StatelessWidget {
 
     await register.set(json);
   }
-  //
 
   @override
   Widget build(BuildContext context) {
@@ -50,19 +49,20 @@ class RegistrationForm extends StatelessWidget {
             margin: const EdgeInsets.symmetric(horizontal: 32.0),
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text(
+                const Text(
                   'Form Registrasi',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Expanded(
                   child: ListView(
                     children: [
                       TextFormField(
                         controller: _textNamaDepan,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Nama Depan',
                           border: OutlineInputBorder(),
                         ),
@@ -73,10 +73,10 @@ class RegistrationForm extends StatelessWidget {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: _textNamaBelakang,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Nama Belakang',
                           border: OutlineInputBorder(),
                         ),
@@ -87,10 +87,10 @@ class RegistrationForm extends StatelessWidget {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: _textEmail,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Email',
                           border: OutlineInputBorder(),
                         ),
@@ -105,10 +105,10 @@ class RegistrationForm extends StatelessWidget {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       TextFormField(
                         controller: _textPassword,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
                         ),
@@ -123,7 +123,7 @@ class RegistrationForm extends StatelessWidget {
                           return null;
                         },
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
                           inputUser(
@@ -133,20 +133,20 @@ class RegistrationForm extends StatelessWidget {
                               namaDepan: _textNamaDepan.text);
                           Navigator.pop(context);
                         },
-                        child: Text('Daftar'),
+                        child: const Text('Daftar'),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Sudah punya akun?'),
-                          SizedBox(width: 5),
+                          const Text('Sudah punya akun?'),
+                          const SizedBox(width: 5),
                           TextButton(
                             onPressed: () {
                               // TODO: Implementasi action saat teks Login di tap
                               Navigator.pop(context);
                             },
-                            child: Text('Login'),
+                            child: const Text('Login'),
                           ),
                         ],
                       ),

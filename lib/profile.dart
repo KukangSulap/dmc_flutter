@@ -62,7 +62,7 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 240, 240, 240),
+      backgroundColor: const Color.fromARGB(255, 240, 240, 240),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -77,34 +77,34 @@ class _MyAccountState extends State<MyAccount> {
             ),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('First Name'),
-            subtitle: const TextField(),
+          const ListTile(
+            leading: Icon(Icons.person),
+            title: Text('First Name'),
+            subtitle: TextField(),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text('Last Name'),
-            subtitle: const TextField(),
+          const ListTile(
+            leading: Icon(Icons.person),
+            title: Text('Last Name'),
+            subtitle: TextField(),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.home),
-            title: const Text('Address'),
-            subtitle: const TextField(),
+          const ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Address'),
+            subtitle: TextField(),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.email),
-            title: const Text('Email'),
-            subtitle: const TextField(),
+          const ListTile(
+            leading: Icon(Icons.email),
+            title: Text('Email'),
+            subtitle: TextField(),
           ),
           const Divider(),
-          ListTile(
-            leading: const Icon(Icons.location_on),
-            title: const Text('Country'),
-            subtitle: const TextField(),
+          const ListTile(
+            leading: Icon(Icons.location_on),
+            title: Text('Country'),
+            subtitle: TextField(),
           ),
           const Divider(),
           const Spacer(),
