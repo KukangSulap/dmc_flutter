@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dmc_flutter/qrisAsliGes.dart';
 
 class PaymentListPage extends StatelessWidget {
   final List<PaymentItem> paymentList = [
@@ -69,7 +70,10 @@ class PaymentListPage extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    // handle onTap event
+                    Navigator.push(
+                      context,
+                        MaterialPageRoute(builder: (context) => const KIRIK())
+                    );
                   },
                 ),
               ),

@@ -94,9 +94,9 @@ class _LoginState extends State<Login> {
             onPressed: () async {
               checkUser(_textEmail.text, _textPassword.text);
             },
-            child: Text('Login'),
+            child: const Text('Login'),
             style: ElevatedButton.styleFrom(
-              minimumSize: Size(double.infinity, 50.0),
+              minimumSize: const Size(double.infinity, 50.0),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16.0),
               ),
@@ -106,7 +106,7 @@ class _LoginState extends State<Login> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Belum punya akun?'),
+              const Text('Belum punya akun?'),
               TextButton(
                 onPressed: () {
                   Navigator.push(
@@ -115,7 +115,7 @@ class _LoginState extends State<Login> {
                           builder: (context) => RegistrationForm()));
                   // belum ada apa apa musti ditambah ke fungsi yang lain
                 },
-                child: Text('Daftar'),
+                child: const Text('Daftar'),
               ),
             ],
           ),
@@ -138,7 +138,7 @@ class _LoginState extends State<Login> {
 
     if (snapshot.docs.isNotEmpty) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Page1Screen()));
+          context, MaterialPageRoute(builder: (context) => const Page1Screen()));
     } else {
       showDialog(
         context: context,
@@ -167,7 +167,7 @@ class _LoginState extends State<Login> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: 150.0),
+                  const SizedBox(height: 150.0),
                   const Text(
                     'Login',
                     style: TextStyle(

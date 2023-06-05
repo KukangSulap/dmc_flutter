@@ -5,6 +5,7 @@ import 'package:dmc_flutter/profile.dart';
 import 'package:dmc_flutter/service/remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:html/dom.dart' as dom;
 import 'package:dmc_flutter/dPemes.dart';
@@ -80,7 +81,7 @@ class _Page1ScreenState extends State<Page1Screen> {
   void initState() {
     super.initState();
     getData();
-    getDataV2();
+    // getDataV2();
   }
 
   getData() async {
@@ -188,8 +189,12 @@ class _Page1ScreenState extends State<Page1Screen> {
                 },
               ),
             ),
+            // WebView(
+            //   initialUrl: 'https://example.com', // Replace with your desired URL
+            //   javascriptMode: JavascriptMode.unrestricted,
+            // ),
             Container(
-              padding: const EdgeInsets.only(left: 8),
+              // padding: const EdgeInsets.only(left: 8),
               child: const Text(
                 'Filler',
                 style: TextStyle(
@@ -261,22 +266,22 @@ class _Page1ScreenState extends State<Page1Screen> {
   }
 }
 
-Future getDataV2() async {
-  final link = Uri.parse('https://www.detik.com/tag/pariwisata/');
-  final hasilny = await http.get(link);
-  dom.Document html = dom.Document.html(hasilny.body);
-
-  final judulny = html
-    .querySelectorAll('body > div.wrapper > div > div.l_content > div.list.media_rows.list-berita > article:nth-child(1) > a > span.box_text > h2')
-    .map((element) => element.innerHtml.trim())
-    .toList();
-
-  print('Count nya woi: ${judulny.length}');
-  for (final title in judulny) {
-    debugPrint(title);
-  }
-
-}
+// Future getDataV2() async {
+//   final link = Uri.parse('https://www.detik.com/tag/pariwisata/');
+//   final hasilny = await http.get(link);
+//   dom.Document html = dom.Document.html(hasilny.body);
+//
+//   final judulny = html
+//     .querySelectorAll('body > div.wrapper > div > div.l_content > div.list.media_rows.list-berita > article:nth-child(1) > a > span.box_text > h2')
+//     .map((element) => element.innerHtml.trim())
+//     .toList();
+//
+//   print('Count nya woi: ${judulny.length}');
+//   for (final title in judulny) {
+//     debugPrint(title);
+//   }
+//
+// }
 
 class PlaceCard extends StatelessWidget {
   final String name;
