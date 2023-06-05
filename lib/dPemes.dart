@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dmc_flutter/metodePembayaran.dart';
 import 'package:flutter/material.dart';
-import 'package:dmc_flutter/main.dart';
-import 'package:pay/pay.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,11 +31,54 @@ class Pemesanan extends StatefulWidget {
 }
 
 class _PemesananState extends State<Pemesanan> {
-  final _namaController = TextEditingController();
-  final _asalController = TextEditingController();
-  final _tujuanController = TextEditingController();
-  final _namakenController = TextEditingController();
-  final _hargaController = TextEditingController();
+  final TextEditingController _namaController = TextEditingController();
+  final TextEditingController _asalController = TextEditingController();
+  final TextEditingController _tujuanController = TextEditingController();
+  final TextEditingController _namakenController = TextEditingController();
+  final TextEditingController _hargaController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+    _loadKendaraan();
+  }
+
+  //Mengambil data kendaraan sesuai yang dipilih
+  Future<void> _loadKendaraan() async {
+    final perfs = await SharedPreferences.getInstance();
+    String kendaraan = perfs.getString('kendaraan') ?? '';
+    setState(() {
+      _namakenController.text = kendaraan;
+    });
+  }
+  //
+
+  //Mengambil data dari database
+  Future<void> fetchData() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final String? email = prefs.getString('email');
+
+      final QuerySnapshot<Map<String, dynamic>> snapshot =
+          await FirebaseFirestore.instance
+              .collection('user')
+              .where('email', isEqualTo: email)
+              .get();
+
+      if (snapshot.docs.isNotEmpty) {
+        final userData = snapshot.docs.first.data();
+        setState(() {
+          _namaController.text =
+              ('${userData['nama_depan']} ${userData['nama_belakang']}');
+        });
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
+  //
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -5,9 +5,8 @@ import 'package:dmc_flutter/profile.dart';
 import 'package:dmc_flutter/service/remote_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:dmc_flutter/dPemes.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:url_strategy/url_strategy.dart';
-
 
 void main() {
 // setPathUrlStrategy();
@@ -87,6 +86,11 @@ class _Page1ScreenState extends State<Page1Screen> {
         isLoaded = true;
       });
     }
+  }
+
+  Future<void> _savePesawat() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('kendaraan', 'pesawat');
   }
 
   @override
@@ -175,6 +179,7 @@ class _Page1ScreenState extends State<Page1Screen> {
                         assetPath: pathGambarYgy[index],
                       ),
                       onTap: () {
+                        _savePesawat();
                         Navigator.push(
                             context,
                             MaterialPageRoute(

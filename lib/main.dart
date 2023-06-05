@@ -3,6 +3,7 @@ import 'package:dmc_flutter/registrasi.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +36,19 @@ class _LoginState extends State<Login> {
 
   void _toggleObscure() {
     setState(() {
+      _clearPref();
       _isObscure = !_isObscure;
     });
+  }
+
+  Future<void> _clearPref() async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+  }
+
+  Future<void> _saveEmail(String email) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('email', email);
   }
 
   Widget _buildBackground() {
@@ -137,6 +149,7 @@ class _LoginState extends State<Login> {
         .get();
 
     if (snapshot.docs.isNotEmpty) {
+      _saveEmail(email);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => Page1Screen()));
     } else {
