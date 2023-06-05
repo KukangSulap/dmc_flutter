@@ -37,7 +37,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
     await register.set(json);
   }
-  //
 
   Widget _buildBackground() {
     return Container(
